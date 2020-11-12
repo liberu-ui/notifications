@@ -5,5 +5,5 @@ import ToastPosition from './components/settings/ToastrPosition.vue';
 
 Vue.component('navbar-notification', Notification);
 Vue.component('setting-toaster-position', ToastPosition);
-App.registerNavbarItem('navbar-notification', 10);
+App.registerNavbarItem('navbar-notification', 300);
 App.registerSettingsItem('setting-toaster-position', 300);
