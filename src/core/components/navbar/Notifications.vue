@@ -1,5 +1,5 @@
 <script>
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash';
 import {
     mapState, mapGetters, mapActions,
 } from 'vuex';
@@ -57,88 +57,6 @@ export default {
 
     methods: {
         ...mapActions('websockets', ['connect']),
-        count() {
-            axios.get(this.route('core.notifications.count'))
-                .then(({ data }) => (this.unread = data.count))
-                .catch(this.errorHandler);
-        },
-        fetch() {
-            if (!this.needsUpdate || this.loading) {
-                return;
-            }
-
-            this.loading = true;
-
-            axios.get(this.route('core.notifications.index'), {
-                params: { offset: this.offset, paginate: this.paginate },
-            }).then(({ data }) => {
-                this.notifications = this.offset ? this.notifications.concat(data) : data;
-                this.offset = this.notifications.length;
-                this.needsUpdate = false;
-                this.loading = false;
-            }).catch(this.errorHandler);
-        },
-        read(notification) {
-            axios.patch(this.route('core.notifications.read', notification.id))
-                .then(({ data }) => {
-                    this.unread = Math.max(--this.unread, 0);
-                    notification.read_at = data.read_at;
-
-                    if (notification.data.path !== '#') {
-                        this.$router.push({ path: notification.data.path });
-                    }
-                }).catch(this.errorHandler);
-        },
-        readAll() {
-            axios.post(this.route('core.notifications.readAll'))
-                .then(this.updateAll)
-                .catch(this.errorHandler);
-        },
-        updateAll() {
-            this.notifications
-                .filter(notification => !notification.read_at)
-                .forEach(notification => (notification.read_at = this.now()));
-
-            this.unread = 0;
-        },
-        initDesktopNotification() {
-            if (!('Notification' in window) || Notification.permission === 'denied') {
-                return;
-            }
-
-            if (Notification.permission === 'granted') {
-                this.desktopNotifications = true;
-                return;
-            }
-
-            Notification.requestPermission(permission => {
-                if (!('permission' in Notification)) {
-                    Notification.permission = permission;
-                }
-                this.desktopNotifications = permission === 'granted';
-            });
-        },
-        listen() {
-            window.Echo.private(this.private).notification(notification => {
-                this.unread++;
-                this.needsUpdate = true;
-                this.offset = 0;
-
-                this.toast(notification);
-
-                return this.webview(notification)
-                    || this.desktop(notification);
-            });
-        },
-        computeScrollPosition(event) {
-            const a = event.target.scrollTop;
-            const b = event.target.scrollHeight - event.target.clientHeight;
-
-            if (a / b > 0.7) {
-                this.needsUpdate = true;
-                this.fetch();
-            }
-        },
         addBusListeners() {
             this.$root.$on('read-notification', notification => {
                 this.unread = Math.max(--this.unread, 0);
@@ -170,24 +88,19 @@ export default {
                 this.unread = 0;
             });
         },
-        timeFromNow(date) {
-            return formatDistance(date);
-        },
-        now() {
-            return format(new Date());
-        },
-        webview({ body, title }) {
-            if (this.isWebview) {
-                ReactNativeWebView.postMessage(JSON.stringify({
-                    title,
-                    body,
-                    type: 'notification',
-                }));
+        computeScrollPosition(event) {
+            const a = event.target.scrollTop;
+            const b = event.target.scrollHeight - event.target.clientHeight;
 
-                return true;
+            if (a / b > 0.7) {
+                this.needsUpdate = true;
+                this.fetch();
             }
-
-            return false;
+        },
+        count() {
+            axios.get(this.route('core.notifications.count'))
+                .then(({ data }) => (this.unread = data.count))
+                .catch(this.errorHandler);
         },
         desktop({ body, title, path }) {
             if (document.hidden && this.desktopNotifications) {
@@ -208,6 +121,80 @@ export default {
 
             return false;
         },
+        fetch() {
+            if (!this.needsUpdate || this.loading) {
+                return;
+            }
+
+            this.loading = true;
+
+            axios.get(this.route('core.notifications.index'), {
+                params: { offset: this.offset, paginate: this.paginate },
+            }).then(({ data }) => {
+                this.notifications = this.offset ? this.notifications.concat(data) : data;
+                this.offset = this.notifications.length;
+                this.needsUpdate = false;
+                this.loading = false;
+            }).catch(this.errorHandler);
+        },
+        initDesktopNotification() {
+            if (!('Notification' in window) || Notification.permission === 'denied') {
+                return;
+            }
+
+            if (Notification.permission === 'granted') {
+                this.desktopNotifications = true;
+                return;
+            }
+
+            Notification.requestPermission(permission => {
+                if (!('permission' in Notification)) {
+                    Notification.permission = permission;
+                }
+                this.desktopNotifications = permission === 'granted';
+            });
+        },
+        listen() {
+            window.Echo.private(this.private).notification(notification => {
+                this.unread++;
+                this.needsUpdate = true;
+                this.offset = 0;
+
+                this.toast(notification);
+
+                return this.webview(notification)
+                    || this.desktop(notification);
+            });
+        },
+        now() {
+            return format(new Date());
+        },
+        read(notification) {
+            axios.patch(this.route('core.notifications.read', notification.id))
+                .then(({ data }) => {
+                    this.unread = Math.max(--this.unread, 0);
+                    notification.read_at = data.read_at;
+
+                    if (notification.data.path !== '#') {
+                        this.$router.push({ path: notification.data.path });
+                    }
+                }).catch(this.errorHandler);
+        },
+        readAll() {
+            axios.post(this.route('core.notifications.readAll'))
+                .then(this.updateAll)
+                .catch(this.errorHandler);
+        },
+        updateAll() {
+            this.notifications
+                .filter(notification => !notification.read_at)
+                .forEach(notification => (notification.read_at = this.now()));
+
+            this.unread = 0;
+        },
+        timeFromNow(date) {
+            return formatDistance(date);
+        },
         toast({
             level, body, title, icon,
         }) {
@@ -215,20 +202,42 @@ export default {
                 .when(icon, toastr => toastr.icon(icon))
                 .when(level, toastr => toastr[level](body), toastr => toastr.info(body));
         },
+        visitNotifications() {
+            const name = 'core.notifications.index';
+
+            if (this.$route.name !== name) {
+                this.$router.push({ name });
+            }
+        },
+        webview({ body, title }) {
+            if (this.isWebview) {
+                // eslint-disable-next-line no-undef
+                ReactNativeWebView.postMessage(JSON.stringify({
+                    title,
+                    body,
+                    type: 'notification',
+                }));
+
+                return true;
+            }
+
+            return false;
+        },
     },
 
     render() {
         return this.$scopedSlots.default({
-            notifications: this.notifications,
-            loading: this.loading,
-            unread: this.unread,
-            fetch: this.fetch,
-            timeFromNow: this.timeFromNow,
-            read: this.read,
-            readAll: this.readAll,
             events: {
                 scroll: e => this.computeScrollPosition(e),
             },
+            fetch: this.fetch,
+            loading: this.loading,
+            notifications: this.notifications,
+            read: this.read,
+            readAll: this.readAll,
+            timeFromNow: this.timeFromNow,
+            unread: this.unread,
+            visitNotifications: this.visitNotifications,
         });
     },
 };

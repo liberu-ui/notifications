@@ -1,13 +1,13 @@
 <template>
     <core-notifications>
         <template v-slot:default="{
-                notifications, loading, unread, fetch,
-                read, readAll, timeFromNow, events
+                events, fetch, loading, notifications, read,
+                readAll, timeFromNow, unread, visitNotifications
             }">
             <navbar-item icon="bell"
                 :loading="loading"
                 @click="$refs.navbarItem.toggle(); fetch()"
-                @touch="$router.push({'name': 'core.notifications.index'})"
+                @touch="visitNotifications"
                 ref="navbarItem">
                 <template v-slot:sup
                     v-if="unread > 0">
@@ -48,10 +48,7 @@
                         <div class="level-left">
                             <div class="level-item">
                                 <a class="button is-small is-info has-margin-left-small"
-                                    @click="
-                                    $refs.navbarItem.hide();
-                                    $router.push({'name': 'core.notifications.index'})
-                                ">
+                                    @click="visitNotifications();$refs.navbarItem.hide()">
                                     <span>{{ i18n("See all") }}</span>
                                     <span class="icon is-small">
                                     <fa icon="eye"/>
@@ -92,8 +89,8 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faBell, faCheck, faEye, faCogs, faQuestion, faEnvelope, faFileExcel,
 } from '@fortawesome/free-solid-svg-icons';
-import CoreNotifications from '../../../core/components/navbar/Notifications.vue';
 import NavbarItem from '@enso-ui/ui/src/bulma/components/navbar/NavbarItem.vue';
+import CoreNotifications from '../../../core/components/navbar/Notifications.vue';
 
 library.add(faBell, faCheck, faEye, faCogs, faQuestion, faEnvelope, faFileExcel);
 
