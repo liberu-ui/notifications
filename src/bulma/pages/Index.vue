@@ -149,7 +149,7 @@ export default {
             this.$root.$emit('read-all-notifications');
         },
         destroyAll() {
-            axios.post(this.route('core.notifications.destroyAll')).then(() => {
+            axios.delete(this.route('core.notifications.destroyAll')).then(() => {
                 this.notifications = [];
                 this.$root.$emit('destroy-all-notifications');
             }).catch(this.errorHandler);
