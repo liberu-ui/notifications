@@ -47,7 +47,7 @@
                         class="level navbar-item">
                         <div class="level-left">
                             <div class="level-item">
-                                <a class="button is-small is-info has-margin-left-small"
+                                <a class="button is-small is-info ml-1"
                                     @click="visitNotifications();$refs.navbarItem.hide()">
                                     <span>{{ i18n("See all") }}</span>
                                     <span class="icon is-small">

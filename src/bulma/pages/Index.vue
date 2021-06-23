@@ -23,7 +23,7 @@
                 </div>
                 <div class="level-item is-marginless"
                     v-if="notifications.length">
-                    <a class="button is-warning is-outlined has-margin-left-small"
+                    <a class="button is-warning is-outlined ml-1"
                         @click="destroyAll">
                         <span>{{ i18n("Clear all") }}</span>
                         <span class="icon is-small">
@@ -38,7 +38,7 @@
                 <li class="animated"
                     v-for="(notification, index) in notifications"
                     :key="notification.id">
-                    <div class="box has-background-light has-padding-medium has-margin-bottom-small"
+                    <div class="box has-background-light p-2 mb-1"
                         :class="{'is-bold': !notification.read_at}">
                         <fa :icon="notification.data.icon"
                             v-if="notification.data.icon"/>
@@ -58,7 +58,7 @@
                                     size="xs"/>
                             </span>
                             {{ timeFromNow(notification.created_at) }}
-                            <a class="delete has-margin-left-medium is-medium"
+                            <a class="delete ml-2 is-medium"
                                 @click="destroy(notification, index)"/>
                         </span>
                         <span class="is-clearfix"/>

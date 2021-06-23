@@ -11,7 +11,7 @@
                     <div class="level-item toastr-position">
                         <dropdown>
                             <template v-slot:label>
-                                <figure class="image is-16x16 has-margin-left-small">
+                                <figure class="image is-16x16 ml-1">
                                     <img :src="`/images/corners/${toastrPosition}.svg`">
                                 </figure>
                             </template>
