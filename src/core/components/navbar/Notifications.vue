@@ -10,7 +10,7 @@ import formatDistance from '@enso-ui/ui/src/modules/plugins/date-fns/formatDista
 export default {
     name: 'Notifications',
 
-    inject: ['errorHandler', 'route', 'toastr'],
+    inject: ['errorHandler', 'route', 'routerErrorHandler', 'toastr'],
 
     props: {
         favicoAnimation: {
@@ -108,7 +108,8 @@ export default {
 
                 notification.onclick = () => {
                     if (path) {
-                        this.$router.push({ path });
+                        this.$router.push({ path })
+                            .catch(this.routerErrorHandler);
                     }
 
                     window.focus();
@@ -176,7 +177,8 @@ export default {
                     notification.read_at = data.read_at;
 
                     if (notification.data.path !== '#') {
-                        this.$router.push({ path: notification.data.path });
+                        this.$router.push({ path: notification.data.path })
+                            .catch(this.routerErrorHandler);
                     }
                 }).catch(this.errorHandler);
         },
@@ -204,10 +206,8 @@ export default {
         },
         visitNotifications() {
             const name = 'core.notifications.index';
-
-            if (this.$route.name !== name) {
-                this.$router.push({ name });
-            }
+            this.$router.push({ name })
+                .catch(this.routerErrorHandler);
         },
         webview({ body, title }) {
             if (this.isWebview) {

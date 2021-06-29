@@ -88,7 +88,7 @@ library.add(faClock, faBell, faCheck, faTrashAlt, faSpinner, faSync);
 export default {
     name: 'Index',
 
-    inject: ['errorHandler', 'i18n', 'route'],
+    inject: ['errorHandler', 'i18n', 'route', 'routerErrorHandler'],
 
     data: () => ({
         paginate: 200,
@@ -130,7 +130,8 @@ export default {
                     this.$root.$emit('read-notification', notification);
 
                     if (notification.data.path && notification.data.path !== '#') {
-                        this.$router.push({ path: notification.data.path });
+                        this.$router.push({ path: notification.data.path })
+                            .catch(this.routerErrorHandler);
                     }
                 }).catch(this.errorHandler);
         },
