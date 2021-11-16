@@ -32,7 +32,7 @@ export default {
     },
 
     render() {
-        return this.$scopedSlots.default({
+        return this.$slots.default({
             toastrPosition: this.toastrPosition,
             positions: this.positions,
             update: this.update,

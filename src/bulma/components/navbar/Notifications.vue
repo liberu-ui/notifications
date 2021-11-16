@@ -1,6 +1,6 @@
 <template>
     <core-notifications>
-        <template #:default="{
+        <template #default="{
                 events, fetch, loading, notifications, read,
                 readAll, timeFromNow, unread, visitNotifications
             }">
@@ -9,13 +9,13 @@
                 @click="$refs.navbarItem.toggle(); fetch()"
                 @touch="visitNotifications"
                 ref="navbarItem">
-                <template #:sup
+                <template #sup
                     v-if="unread > 0">
                     <span class="has-text-danger">
                         {{ unread }}
                     </span>
                 </template>
-                <template #:default>
+                <template #default>
                     <div class="notification-list"
                         v-on="events">
                         <a v-for="notification in notifications"

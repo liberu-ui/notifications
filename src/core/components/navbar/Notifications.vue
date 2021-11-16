@@ -226,7 +226,7 @@ export default {
     },
 
     render() {
-        return this.$scopedSlots.default({
+        return this.$slots.default({
             events: {
                 scroll: e => this.computeScrollPosition(e),
             },
