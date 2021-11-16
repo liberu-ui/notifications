@@ -76,6 +76,7 @@
 <script>
 import debounce from 'lodash/debounce';
 import { mapState } from 'vuex';
+import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faClock, faBell, faCheck, faTrashAlt, faSpinner, faSync,
@@ -89,6 +90,8 @@ export default {
     name: 'Index',
 
     inject: ['errorHandler', 'i18n', 'route', 'routerErrorHandler'],
+
+    components: { Fa },
 
     data: () => ({
         paginate: 200,

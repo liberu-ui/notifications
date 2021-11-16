@@ -85,6 +85,7 @@
 <script>
 
 import { clickOutside } from '@enso-ui/directives';
+import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faBell, faCheck, faEye, faCogs, faQuestion, faEnvelope, faFileExcel,
@@ -99,7 +100,7 @@ export default {
 
     directives: { clickOutside },
 
-    components: { CoreNotifications, NavbarItem },
+    components: { CoreNotifications, Fa, NavbarItem },
 
     inject: ['i18n'],
 };
