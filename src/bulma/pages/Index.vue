@@ -81,6 +81,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faClock, faBell, faCheck, faTrashAlt, faSpinner, faSync,
 } from '@fortawesome/free-solid-svg-icons';
+import eventBus from '@enso-ui/ui/src/core/services/eventBus';
 import format from '@enso-ui/ui/src/modules/plugins/date-fns/format';
 import formatDistance from '@enso-ui/ui/src/modules/plugins/date-fns/formatDistance';
 
@@ -130,7 +131,7 @@ export default {
             axios.patch(this.route('core.notifications.read', notification.id))
                 .then(({ data }) => {
                     notification.read_at = data.read_at;
-                    this.$root.$emit('read-notification', notification);
+                    eventBus.$emit('read-notification', notification);
 
                     if (notification.data.path && notification.data.path !== '#') {
                         this.$router.push({ path: notification.data.path })
@@ -150,18 +151,18 @@ export default {
 
             this.unreadCount = 0;
 
-            this.$root.$emit('read-all-notifications');
+            eventBus.$emit('read-all-notifications');
         },
         destroyAll() {
             axios.delete(this.route('core.notifications.destroyAll')).then(() => {
                 this.notifications = [];
-                this.$root.$emit('destroy-all-notifications');
+                eventBus.$emit('destroy-all-notifications');
             }).catch(this.errorHandler);
         },
         destroy(notification, index) {
             axios.delete(this.route('core.notifications.destroy', notification.id)).then(() => {
                 this.notifications.splice(index, 1);
-                this.$root.$emit('destroy-notification', notification);
+                eventBus.$emit('destroy-notification', notification);
             }).catch(this.errorHandler);
         },
         timeFromNow(date) {

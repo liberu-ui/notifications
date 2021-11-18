@@ -4,6 +4,7 @@ import {
     mapState, mapGetters, mapActions,
 } from 'vuex';
 import Favico from 'favico.js';
+import eventBus from '@enso-ui/ui/src/core/services/eventBus';
 import format from '@enso-ui/ui/src/modules/plugins/date-fns/format';
 import formatDistance from '@enso-ui/ui/src/modules/plugins/date-fns/formatDistance';
 
@@ -58,7 +59,7 @@ export default {
     methods: {
         ...mapActions('websockets', ['connect']),
         addBusListeners() {
-            this.$root.$on('read-notification', notification => {
+            eventBus.$on('read-notification', notification => {
                 this.unread = Math.max(--this.unread, 0);
                 const existing = this.notifications
                     .find(({ id }) => id === notification.id);
@@ -68,9 +69,9 @@ export default {
                 }
             });
 
-            this.$root.$on('read-all-notifications', () => this.updateAll());
+            eventBus.$on('read-all-notifications', () => this.updateAll());
 
-            this.$root.$on('destroy-notification', notification => {
+            eventBus.$on('destroy-notification', notification => {
                 if (!notification.read_at) {
                     this.unread = Math.max(--this.unread, 0);
                 }
@@ -83,7 +84,7 @@ export default {
                 }
             });
 
-            this.$root.$on('destroy-all-notifications', () => {
+            eventBus.$on('destroy-all-notifications', () => {
                 this.notifications = [];
                 this.unread = 0;
             });
