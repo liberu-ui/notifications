@@ -18,7 +18,6 @@ export default {
     created() {
         if (this.toastrPosition) {
             this.toastr.defaults({ position: this.toastrPosition }).reset();
-            this.$toastr.defaults({ position: this.toastrPosition }).reset();
         }
     },
 
@@ -27,7 +26,6 @@ export default {
         update(position) {
             this.setToastrPosition(position);
             this.toastr.defaults({ position }).reset();
-            this.$toastr.defaults({ position }).reset();
         },
     },
 
