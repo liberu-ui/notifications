@@ -13,7 +13,7 @@
                     </a>
                 </div>
                 <div class="level-item">
-                    <a :class="['button animated fadeIn', {'is-loading': loading}]"
+                    <a :class="['button animate__animated animate__fadeIn', {'is-loading': loading}]"
                         @click="fetch">
                         <span>{{ i18n('Reload') }}</span>
                         <span class="icon is-small">
@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import 'animate.css';
 import debounce from 'lodash/debounce';
 import { mapState } from 'vuex';
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
