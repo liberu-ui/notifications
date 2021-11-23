@@ -13,13 +13,15 @@
                     </a>
                 </div>
                 <div class="level-item">
-                    <a :class="['button animate__animated animate__fadeIn', {'is-loading': loading}]"
-                        @click="fetch">
-                        <span>{{ i18n('Reload') }}</span>
-                        <span class="icon is-small">
-                            <fa icon="sync"/>
-                        </span>
-                    </a>
+                    <fade>
+                        <a :class="['button', {'is-loading': loading}]"
+                            @click="fetch">
+                            <span>{{ i18n('Reload') }}</span>
+                            <span class="icon is-small">
+                                <fa icon="sync"/>
+                            </span>
+                        </a>
+                    </fade>
                 </div>
                 <div class="level-item is-marginless"
                     v-if="notifications.length">
@@ -74,7 +76,7 @@
 </template>
 
 <script>
-import 'animate.css';
+import { Fade } from '@enso-ui/transitions';
 import debounce from 'lodash/debounce';
 import { mapState } from 'vuex';
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
@@ -93,7 +95,7 @@ export default {
 
     inject: ['errorHandler', 'i18n', 'route', 'routerErrorHandler'],
 
-    components: { Fa },
+    components: { Fa, Fade },
 
     data: () => ({
         paginate: 200,
