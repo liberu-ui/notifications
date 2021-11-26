@@ -1,14 +1,14 @@
 <template>
-    <core-toastr-position>
-        <template #default="{ positions, toastrPosition, update }">
-            <div class="level is-mobile">
-                <div class="level-left">
-                    <div class="level-item is-marginless">
-                        {{ i18n('Notifications') }}
-                    </div>
-                </div>
-                <div class="level-right">
-                    <div class="level-item toastr-position">
+    <div class="level is-mobile">
+        <div class="level-left">
+            <div class="level-item is-marginless">
+                {{ i18n('Notifications') }}
+            </div>
+        </div>
+        <div class="level-right">
+            <div class="level-item toastr-position">
+                <core-toastr-position>
+                    <template #default="{ positions, toastrPosition, update }">
                         <dropdown>
                             <template #label>
                                 <figure class="image is-16x16 ml-1">
@@ -26,11 +26,11 @@
                                 </dropdown-item>
                             </template>
                         </dropdown>
-                    </div>
-                </div>
+                    </template>
+                </core-toastr-position>
             </div>
-        </template>
-    </core-toastr-position>
+        </div>
+    </div>
 </template>
 
 <script>
