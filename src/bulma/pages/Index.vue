@@ -95,6 +95,11 @@ export default {
 
     inject: ['errorHandler', 'i18n', 'route', 'routerErrorHandler'],
 
+    emits: [
+        'read-notification', 'read-all-notifications',
+        'destroy-notification', 'destroy-all-notification',
+    ],
+
     components: { Fa, Fade },
 
     data: () => ({
