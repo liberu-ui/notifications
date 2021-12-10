@@ -4,7 +4,7 @@
             <div class="level is-mobile">
                 <div class="level-item"
                     v-if="notifications.length">
-                    <a class="button is-success is-outlined"
+                    <a class="button is-success"
                         @click="readAll">
                         <span>{{ i18n("Mark all read") }}</span>
                         <span class="icon is-small">
@@ -25,7 +25,7 @@
                 </div>
                 <div class="level-item is-marginless"
                     v-if="notifications.length">
-                    <a class="button is-warning is-outlined ml-1"
+                    <a class="button is-warning ml-1"
                         @click="destroyAll">
                         <span>{{ i18n("Clear all") }}</span>
                         <span class="icon is-small">
@@ -154,7 +154,7 @@ export default {
         },
         updateAll() {
             this.notifications.forEach(notification => {
-                notification.read_at = notification.read_at || format(new Date(), 'Y-MM-DD H:mm:s');
+                notification.read_at = notification.read_at || format(new Date(), 'Y-M-D H:i:s');
             });
 
             this.unreadCount = 0;
