@@ -15,17 +15,11 @@ export default {
         ...mapGetters('preferences', ['toastrPosition']),
     },
 
-    created() {
-        if (this.toastrPosition) {
-            this.toastr.position(this.toastrPosition).reset();
-        }
-    },
-
     methods: {
         ...mapActions('preferences', ['setToastrPosition']),
         update(position) {
             this.setToastrPosition(position);
-            this.toastr.position(position).reset();
+            this.toastr.setup(position);
         },
     },
 
