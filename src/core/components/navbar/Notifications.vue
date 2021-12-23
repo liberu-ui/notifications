@@ -11,7 +11,7 @@ import formatDistance from '@enso-ui/ui/src/modules/plugins/date-fns/formatDista
 export default {
     name: 'Notifications',
 
-    inject: ['errorHandler', 'route', 'routerErrorHandler', 'toastr'],
+    inject: ['errorHandler', 'http', 'route', 'routerErrorHandler', 'toastr'],
 
     props: {
         favicoAnimation: {
@@ -99,7 +99,7 @@ export default {
             }
         },
         count() {
-            axios.get(this.route('core.notifications.count'))
+            this.http.get(this.route('core.notifications.count'))
                 .then(({ data }) => (this.unread = data.count))
                 .catch(this.errorHandler);
         },
@@ -130,7 +130,7 @@ export default {
 
             this.loading = true;
 
-            axios.get(this.route('core.notifications.index'), {
+            this.http.get(this.route('core.notifications.index'), {
                 params: { offset: this.offset, paginate: this.paginate },
             }).then(({ data }) => {
                 this.notifications = this.offset ? this.notifications.concat(data) : data;
@@ -172,7 +172,7 @@ export default {
             return format(new Date());
         },
         read(notification) {
-            axios.patch(this.route('core.notifications.read', notification.id))
+            this.http.patch(this.route('core.notifications.read', notification.id))
                 .then(({ data }) => {
                     this.unread = Math.max(--this.unread, 0);
                     notification.read_at = data.read_at;
@@ -184,7 +184,7 @@ export default {
                 }).catch(this.errorHandler);
         },
         readAll() {
-            axios.post(this.route('core.notifications.readAll'))
+            this.http.post(this.route('core.notifications.readAll'))
                 .then(this.updateAll)
                 .catch(this.errorHandler);
         },

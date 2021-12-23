@@ -93,7 +93,7 @@ library.add(faClock, faBell, faCheck, faTrashAlt, faSpinner, faSync);
 export default {
     name: 'Index',
 
-    inject: ['errorHandler', 'i18n', 'route', 'routerErrorHandler'],
+    inject: ['errorHandler', 'http', 'i18n', 'route', 'routerErrorHandler'],
 
     emits: [
         'read-notification', 'read-all-notifications',
@@ -127,7 +127,7 @@ export default {
 
             this.loading = true;
 
-            axios.get(this.route('core.notifications.index'), {
+            this.http.get(this.route('core.notifications.index'), {
                 params: { offset: this.offset, paginate: this.paginate },
             }).then(({ data }) => {
                 this.notifications = this.offset ? this.notifications.concat(data) : data;
@@ -136,7 +136,7 @@ export default {
             }).catch(this.errorHandler);
         },
         read(notification) {
-            axios.patch(this.route('core.notifications.read', notification.id))
+            this.http.patch(this.route('core.notifications.read', notification.id))
                 .then(({ data }) => {
                     notification.read_at = data.read_at;
                     eventBus.$emit('read-notification', notification);
@@ -148,7 +148,7 @@ export default {
                 }).catch(this.errorHandler);
         },
         readAll() {
-            axios.post(this.route('core.notifications.readAll'))
+            this.http.post(this.route('core.notifications.readAll'))
                 .then(() => this.updateAll())
                 .catch(this.errorHandler);
         },
@@ -162,13 +162,13 @@ export default {
             eventBus.$emit('read-all-notifications');
         },
         destroyAll() {
-            axios.delete(this.route('core.notifications.destroyAll')).then(() => {
+            this.http.delete(this.route('core.notifications.destroyAll')).then(() => {
                 this.notifications = [];
                 eventBus.$emit('destroy-all-notifications');
             }).catch(this.errorHandler);
         },
         destroy(notification, index) {
-            axios.delete(this.route('core.notifications.destroy', notification.id)).then(() => {
+            this.http.delete(this.route('core.notifications.destroy', notification.id)).then(() => {
                 this.notifications.splice(index, 1);
                 eventBus.$emit('destroy-notification', notification);
             }).catch(this.errorHandler);
