@@ -93,14 +93,14 @@ library.add(faClock, faBell, faCheck, faTrashAlt, faSpinner, faSync);
 export default {
     name: 'Index',
 
+    components: { Fa, Fade },
+
     inject: ['errorHandler', 'http', 'i18n', 'route', 'routerErrorHandler'],
 
     emits: [
         'read-notification', 'read-all-notifications',
         'destroy-notification', 'destroy-all-notification',
     ],
-
-    components: { Fa, Fade },
 
     data: () => ({
         paginate: 200,
