@@ -1,21 +1,21 @@
 <template>
-    <core-toastr-position>
-        <template v-slot:default="{ positions, toastrPosition, update }">
-            <div class="level is-mobile">
-                <div class="level-left">
-                    <div class="level-item is-marginless">
-                        {{ i18n('Notifications') }}
-                    </div>
-                </div>
-                <div class="level-right">
-                    <div class="level-item toastr-position">
+    <div class="level is-mobile">
+        <div class="level-left">
+            <div class="level-item is-marginless">
+                {{ i18n('Notifications') }}
+            </div>
+        </div>
+        <div class="level-right">
+            <div class="level-item toastr-position">
+                <core-toastr-position>
+                    <template #default="{ positions, toastrPosition, update }">
                         <dropdown>
-                            <template v-slot:label>
+                            <template #label>
                                 <figure class="image is-16x16 ml-1">
                                     <img :src="`/images/corners/${toastrPosition}.svg`">
                                 </figure>
                             </template>
-                            <template v-slot:items>
+                            <template #items>
                                 <dropdown-item v-for="position in positions"
                                     :key="position"
                                     :selected="toastrPosition === position"
@@ -26,11 +26,11 @@
                                 </dropdown-item>
                             </template>
                         </dropdown>
-                    </div>
-                </div>
+                    </template>
+                </core-toastr-position>
             </div>
-        </template>
-    </core-toastr-position>
+        </div>
+    </div>
 </template>
 
 <script>

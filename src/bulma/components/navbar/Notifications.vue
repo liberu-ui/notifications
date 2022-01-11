@@ -1,6 +1,6 @@
 <template>
     <core-notifications>
-        <template v-slot:default="{
+        <template #default="{
                 events, fetch, loading, notifications, read,
                 readAll, timeFromNow, unread, visitNotifications
             }">
@@ -9,13 +9,13 @@
                 @click="$refs.navbarItem.toggle(); fetch()"
                 @touch="visitNotifications"
                 ref="navbarItem">
-                <template v-slot:sup
+                <template #sup
                     v-if="unread > 0">
                     <span class="has-text-danger">
                         {{ unread }}
                     </span>
                 </template>
-                <template v-slot:default>
+                <template #default>
                     <div class="notification-list"
                         v-on="events">
                         <a v-for="notification in notifications"
@@ -85,6 +85,7 @@
 <script>
 
 import { clickOutside } from '@enso-ui/directives';
+import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faBell, faCheck, faEye, faCogs, faQuestion, faEnvelope, faFileExcel,
@@ -99,7 +100,7 @@ export default {
 
     directives: { clickOutside },
 
-    components: { CoreNotifications, NavbarItem },
+    components: { CoreNotifications, Fa, NavbarItem },
 
     inject: ['i18n'],
 };

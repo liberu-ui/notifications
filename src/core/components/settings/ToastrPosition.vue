@@ -15,24 +15,16 @@ export default {
         ...mapGetters('preferences', ['toastrPosition']),
     },
 
-    created() {
-        if (this.toastrPosition) {
-            this.toastr.defaults({ position: this.toastrPosition }).reset();
-            this.$toastr.defaults({ position: this.toastrPosition }).reset();
-        }
-    },
-
     methods: {
         ...mapActions('preferences', ['setToastrPosition']),
         update(position) {
             this.setToastrPosition(position);
-            this.toastr.defaults({ position }).reset();
-            this.$toastr.defaults({ position }).reset();
+            this.toastr.setup(position);
         },
     },
 
     render() {
-        return this.$scopedSlots.default({
+        return this.$slots.default({
             toastrPosition: this.toastrPosition,
             positions: this.positions,
             update: this.update,

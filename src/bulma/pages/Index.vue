@@ -4,7 +4,7 @@
             <div class="level is-mobile">
                 <div class="level-item"
                     v-if="notifications.length">
-                    <a class="button is-success is-outlined"
+                    <a class="button is-success"
                         @click="readAll">
                         <span>{{ i18n("Mark all read") }}</span>
                         <span class="icon is-small">
@@ -13,17 +13,19 @@
                     </a>
                 </div>
                 <div class="level-item">
-                    <a :class="['button animated fadeIn', {'is-loading': loading}]"
-                        @click="fetch">
-                        <span>{{ i18n('Reload') }}</span>
-                        <span class="icon is-small">
-                            <fa icon="sync"/>
-                        </span>
-                    </a>
+                    <fade>
+                        <a :class="['button', {'is-loading': loading}]"
+                            @click="fetch">
+                            <span>{{ i18n('Reload') }}</span>
+                            <span class="icon is-small">
+                                <fa icon="sync"/>
+                            </span>
+                        </a>
+                    </fade>
                 </div>
                 <div class="level-item is-marginless"
                     v-if="notifications.length">
-                    <a class="button is-warning is-outlined ml-1"
+                    <a class="button is-warning ml-1"
                         @click="destroyAll">
                         <span>{{ i18n("Clear all") }}</span>
                         <span class="icon is-small">
@@ -74,12 +76,15 @@
 </template>
 
 <script>
+import { Fade } from '@enso-ui/transitions';
 import debounce from 'lodash/debounce';
 import { mapState } from 'vuex';
+import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faClock, faBell, faCheck, faTrashAlt, faSpinner, faSync,
 } from '@fortawesome/free-solid-svg-icons';
+import eventBus from '@enso-ui/ui/src/core/services/eventBus';
 import format from '@enso-ui/ui/src/modules/plugins/date-fns/format';
 import formatDistance from '@enso-ui/ui/src/modules/plugins/date-fns/formatDistance';
 
@@ -88,7 +93,14 @@ library.add(faClock, faBell, faCheck, faTrashAlt, faSpinner, faSync);
 export default {
     name: 'Index',
 
-    inject: ['errorHandler', 'i18n', 'route', 'routerErrorHandler'],
+    components: { Fa, Fade },
+
+    inject: ['errorHandler', 'http', 'i18n', 'route', 'routerErrorHandler'],
+
+    emits: [
+        'read-notification', 'read-all-notifications',
+        'destroy-notification', 'destroy-all-notification',
+    ],
 
     data: () => ({
         paginate: 200,
@@ -115,7 +127,7 @@ export default {
 
             this.loading = true;
 
-            axios.get(this.route('core.notifications.index'), {
+            this.http.get(this.route('core.notifications.index'), {
                 params: { offset: this.offset, paginate: this.paginate },
             }).then(({ data }) => {
                 this.notifications = this.offset ? this.notifications.concat(data) : data;
@@ -124,10 +136,10 @@ export default {
             }).catch(this.errorHandler);
         },
         read(notification) {
-            axios.patch(this.route('core.notifications.read', notification.id))
+            this.http.patch(this.route('core.notifications.read', notification.id))
                 .then(({ data }) => {
                     notification.read_at = data.read_at;
-                    this.$root.$emit('read-notification', notification);
+                    eventBus.$emit('read-notification', notification);
 
                     if (notification.data.path && notification.data.path !== '#') {
                         this.$router.push({ path: notification.data.path })
@@ -136,29 +148,29 @@ export default {
                 }).catch(this.errorHandler);
         },
         readAll() {
-            axios.post(this.route('core.notifications.readAll'))
+            this.http.post(this.route('core.notifications.readAll'))
                 .then(() => this.updateAll())
                 .catch(this.errorHandler);
         },
         updateAll() {
             this.notifications.forEach(notification => {
-                notification.read_at = notification.read_at || format(new Date(), 'Y-MM-DD H:mm:s');
+                notification.read_at = notification.read_at || format(new Date(), 'Y-M-D H:i:s');
             });
 
             this.unreadCount = 0;
 
-            this.$root.$emit('read-all-notifications');
+            eventBus.$emit('read-all-notifications');
         },
         destroyAll() {
-            axios.delete(this.route('core.notifications.destroyAll')).then(() => {
+            this.http.delete(this.route('core.notifications.destroyAll')).then(() => {
                 this.notifications = [];
-                this.$root.$emit('destroy-all-notifications');
+                eventBus.$emit('destroy-all-notifications');
             }).catch(this.errorHandler);
         },
         destroy(notification, index) {
-            axios.delete(this.route('core.notifications.destroy', notification.id)).then(() => {
+            this.http.delete(this.route('core.notifications.destroy', notification.id)).then(() => {
                 this.notifications.splice(index, 1);
-                this.$root.$emit('destroy-notification', notification);
+                eventBus.$emit('destroy-notification', notification);
             }).catch(this.errorHandler);
         },
         timeFromNow(date) {
