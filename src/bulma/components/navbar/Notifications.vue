@@ -6,7 +6,7 @@
             }">
             <navbar-item icon="bell"
                 :loading="loading"
-                @click="$refs.navbarItem.toggle(); fetch()"
+                @show="fetch"
                 @touch="visitNotifications"
                 ref="navbarItem">
                 <template #sup
