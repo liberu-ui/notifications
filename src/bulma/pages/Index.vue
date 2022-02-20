@@ -35,9 +35,9 @@
                 </div>
             </div>
             <transition-group tag="ul"
-                enter-active-class="fadeIn"
-                leave-active-class="fadeOut">
-                <li class="animated"
+                enter-active-class="animate__fadeIn"
+                leave-active-class="animate__fadeOut">
+                <li class="animate__animated"
                     v-for="(notification, index) in notifications"
                     :key="notification.id">
                     <div class="box has-background-light p-2 mb-1"
