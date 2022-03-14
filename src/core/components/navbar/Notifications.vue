@@ -52,12 +52,10 @@ export default {
         this.initDesktopNotification();
         this.count();
         this.addBusListeners();
-        this.connect();
         this.listen();
     },
 
     methods: {
-        ...mapActions('websockets', ['connect']),
         addBusListeners() {
             eventBus.$on('read-notification', notification => {
                 this.unread = Math.max(--this.unread, 0);
