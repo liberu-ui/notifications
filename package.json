@@ -1,5 +1,5 @@
 {
-  "name": "@cgdsoftware/notifications",
+  "name": "@liberu-ui/notifications",
   "version": "3.0.1",
   "description": "Basic notifications package",
   "main": "src/bulma/pages/Index.vue",
@@ -21,11 +21,11 @@
   },
   "homepage": "https://github.com/enso-ui/notifications#readme",
   "dependencies": {
-    "@cgdsoftware/directives": "^2.0",
-    "@cgdsoftware/dropdown": "^3.0",
-    "@cgdsoftware/toastr": "^3.0",
-    "@cgdsoftware/ui": "^6.0",
-    "@cgdsoftware/transitions": "^2.0",
+    "@liberu-ui/directives": "^2.0",
+    "@liberu-ui/dropdown": "^3.0",
+    "@liberu-ui/toastr": "^3.0",
+    "@liberu-ui/ui": "^6.0",
+    "@liberu-ui/transitions": "^2.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.2",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/vue-fontawesome": "3.0.0-5",
