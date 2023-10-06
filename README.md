@@ -1,10 +1,10 @@
 # notifications
 
-![npm license](https://img.shields.io/npm/l/@enso-ui/notifications.svg) 
-![npm download](https://img.shields.io/npm/dm/@enso-ui/notifications.svg) 
-![GitHub top language](https://img.shields.io/github/languages/top/enso-ui/notifications.svg) 
-![GitHub issues](https://img.shields.io/github/issues/enso-ui/notifications.svg) 
-![npm version](https://img.shields.io/npm/v/@enso-ui/notifications.svg) 
+![npm license](https://img.shields.io/npm/l/@liberu-ui/notifications.svg) 
+![npm download](https://img.shields.io/npm/dm/@liberu-ui/notifications.svg) 
+![GitHub top language](https://img.shields.io/github/languages/top/liberu-ui/notifications.svg) 
+![GitHub issues](https://img.shields.io/github/issues/liberu-ui/notifications.svg) 
+![npm version](https://img.shields.io/npm/v/@liberu-ui/notifications.svg) 
 
 ## Usage
 The component cannot be used outside of the Liberu ecosystem.

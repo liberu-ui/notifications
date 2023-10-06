@@ -84,13 +84,13 @@
 
 <script>
 
-import { clickOutside } from '@enso-ui/directives';
+import { clickOutside } from '@liberu-ui/directives';
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faBell, faCheck, faEye, faCogs, faQuestion, faEnvelope, faFileExcel,
 } from '@fortawesome/free-solid-svg-icons';
-import NavbarItem from '@enso-ui/ui/src/bulma/components/navbar/NavbarItem.vue';
+import NavbarItem from '@liberu-ui/ui/src/bulma/components/navbar/NavbarItem.vue';
 import CoreNotifications from '../../../core/components/navbar/Notifications.vue';
 
 library.add(faBell, faCheck, faEye, faCogs, faQuestion, faEnvelope, faFileExcel);
