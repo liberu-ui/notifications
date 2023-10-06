@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import { Fade } from '@enso-ui/transitions';
+import { Fade } from '@liberu-ui/transitions';
 import debounce from 'lodash/debounce';
 import { mapState } from 'vuex';
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome';
@@ -84,9 +84,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import {
     faClock, faBell, faCheck, faTrashAlt, faSpinner, faSync,
 } from '@fortawesome/free-solid-svg-icons';
-import eventBus from '@enso-ui/ui/src/core/services/eventBus';
-import format from '@enso-ui/ui/src/modules/plugins/date-fns/format';
-import formatDistance from '@enso-ui/ui/src/modules/plugins/date-fns/formatDistance';
+import eventBus from '@liberu-ui/ui/src/core/services/eventBus';
+import format from '@liberu-ui/ui/src/modules/plugins/date-fns/format';
+import formatDistance from '@liberu-ui/ui/src/modules/plugins/date-fns/formatDistance';
 
 library.add(faClock, faBell, faCheck, faTrashAlt, faSpinner, faSync);
 

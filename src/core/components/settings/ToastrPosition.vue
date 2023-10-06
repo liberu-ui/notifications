@@ -1,6 +1,6 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import { positions } from '@enso-ui/toastr/config';
+import { positions } from '@liberu-ui/toastr/config';
 
 export default {
     name: 'ToastrPosition',

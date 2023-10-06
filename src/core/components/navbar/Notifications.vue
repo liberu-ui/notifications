@@ -4,9 +4,9 @@ import {
     mapState, mapGetters, mapActions,
 } from 'vuex';
 import Favico from 'favico.js';
-import eventBus from '@enso-ui/ui/src/core/services/eventBus';
-import format from '@enso-ui/ui/src/modules/plugins/date-fns/format';
-import formatDistance from '@enso-ui/ui/src/modules/plugins/date-fns/formatDistance';
+import eventBus from '@liberu-ui/ui/src/core/services/eventBus';
+import format from '@liberu-ui/ui/src/modules/plugins/date-fns/format';
+import formatDistance from '@liberu-ui/ui/src/modules/plugins/date-fns/formatDistance';
 
 export default {
     name: 'Notifications',

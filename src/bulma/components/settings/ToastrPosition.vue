@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { Dropdown, DropdownItem } from '@enso-ui/dropdown/bulma';
+import { Dropdown, DropdownItem } from '@liberu-ui/dropdown/bulma';
 import CoreToastrPosition from '../../../core/components/settings/ToastrPosition.vue';
 
 export default {
