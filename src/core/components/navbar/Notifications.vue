@@ -3,7 +3,7 @@ import { debounce } from 'lodash';
 import {
     mapState, mapGetters, mapActions,
 } from 'vuex';
-import Favico from 'favico.js';
+import Favico from 'favico.ts';
 import eventBus from '@liberu-ui/ui/src/core/services/eventBus';
 import format from '@liberu-ui/ui/src/modules/plugins/date-fns/format';
 import formatDistance from '@liberu-ui/ui/src/modules/plugins/date-fns/formatDistance';
